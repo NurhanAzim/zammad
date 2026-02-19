@@ -63,17 +63,17 @@ class TelegramReply
     articleTypes
 
   @setArticleTypePost: (type, ticket, ui) ->
-    return if type isnt 'telegram personal-message'
-    rawHTML = ui.$('[data-name=body]').html()
-    cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
-    if cleanHTML && cleanHTML.html() != rawHTML
-      ui.$('[data-name=body]').html(cleanHTML)
+    # return if type isnt 'telegram personal-message'
+    # rawHTML = ui.$('[data-name=body]').html()
+    # cleanHTML = App.Utils.htmlRemoveRichtext(rawHTML)
+    # if cleanHTML && cleanHTML.html() != rawHTML
+    #   ui.$('[data-name=body]').html(cleanHTML)
 
   @params: (type, params, ui) ->
-    if type is 'telegram personal-message'
-      App.Utils.htmlRemoveRichtext(ui.$('[data-name=body]'), false)
-      params.content_type = 'text/plain'
-      params.body = App.Utils.html2text(params.body, true)
+    # if type is 'telegram personal-message'
+    #   App.Utils.htmlRemoveRichtext(ui.$('[data-name=body]'), false)
+    #   params.content_type = 'text/plain'
+    #   params.body = App.Utils.html2text(params.body, true)
 
     params
 

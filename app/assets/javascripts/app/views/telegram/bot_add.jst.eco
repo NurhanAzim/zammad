@@ -18,7 +18,7 @@
       <label for="welcome"><%- @T('Welcome message') %> <span>*</span></label>
     </div>
     <div class="controls">
-      <input id="welcome" type="text" name="welcome" value="" placeholder="<%- @Ti('Welcome! Feel free to ask me a question!') %>" class="form-control" required autocomplete="off">
+      <textarea id="welcome" name="welcome" placeholder="<%- @Ti('Welcome! Feel free to ask me a question!') %>" class="form-control" required autocomplete="off" rows="5"></textarea>
     </div>
   </div>
   <div class="input form-group">
@@ -26,7 +26,7 @@
       <label for="goodbye"><%- @T('Goodbye message') %> <span>*</span></label>
     </div>
     <div class="controls">
-      <input id="goodbye" type="text" name="goodbye" value="" placeholder="<%- @Ti('Have a nice day.') %>" class="form-control" required autocomplete="off">
+      <textarea id="goodbye" name="goodbye" placeholder="<%- @Ti('Have a nice day.') %>" class="form-control" required autocomplete="off" rows="5"></textarea>
     </div>
   </div>
   <div class="input form-group">
