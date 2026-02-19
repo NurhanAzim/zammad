@@ -31,7 +31,7 @@ class CommunicateTelegramJob < ApplicationJob
     begin
       Telegram::Bot::Client.run(channel.options[:api_token]) do |bot|
         chat_id = ticket.preferences[:telegram][:chat_id]
-        result = bot.api.sendMessage(chat_id: chat_id, text: article.body)
+        result = bot.api.sendMessage(chat_id: chat_id, text: TelegramHelper.sanitize_html(article.body), parse_mode: 'HTML')
 
         article.attachments.each do |file|
           parts = file.filename.split(%r{^(.*)(\..+?)$})

@@ -203,6 +203,39 @@ returns
     "#{message_id}@telegram"
   end
 
+  def self.sanitize_html(html)
+    return '' if html.blank?
+
+    # telegram supported tags
+    permitted_tags = %w[b strong i em u ins s strike del a code pre]
+
+    # convert structural tags to newlines
+    html = html.gsub(%r{<br(|/| [^>]*)>}i, "\n")
+    html = html.gsub(%r{</p>|</div>}i, "\n")
+    html = html.gsub(%r{<p(| [^>]*)>|<div(| [^>]*)>}i, "\n")
+
+    fragment = Loofah.fragment(html)
+    fragment.traverse do |node|
+      next if node.text?
+
+      if permitted_tags.include?(node.name)
+        if node.name == 'a'
+          href = node['href']
+          node.attribute_nodes.each(&:remove)
+          node['href'] = href if href.present?
+        else
+          node.attribute_nodes.each(&:remove)
+        end
+      else
+        node.replace(node.children)
+      end
+    end
+
+    # to_html will escape any other < > &
+    # also remove multiple consecutive newlines for cleaner output
+    fragment.to_html.gsub(%r{\n\n+}, "\n\n").strip
+  end
+
 =begin
 
   client = TelegramHelper.new('token')
@@ -231,8 +264,10 @@ returns
       message = Translation.translate(locale[:locale], message)
     end
 
+    sanitized_message = TelegramHelper.sanitize_html(message)
+
     Telegram::Bot::Client.run(@token) do |bot|
-      bot.api.sendMessage(chat_id: chat_id, text: message)
+      bot.api.sendMessage(chat_id: chat_id, text: sanitized_message, parse_mode: 'HTML')
     end
   end
 
