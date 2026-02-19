@@ -216,7 +216,7 @@ returns
 
     fragment = Loofah.fragment(html)
     fragment.traverse do |node|
-      next if node.text?
+      next if !node.element?
 
       if permitted_tags.include?(node.name)
         if node.name == 'a'
