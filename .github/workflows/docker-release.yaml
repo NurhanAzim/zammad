@@ -56,7 +56,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ghcr.io/${{ github.repository_owner }}/zammad
+            ghcr.io/nurhanazim/zammad
           #  index.docker.io/${{ github.repository_owner }}/zammad
           #  index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
           #  quay.io/${{ github.repository_owner }}/zammad
@@ -83,7 +83,7 @@ jobs:
     strategy:
       matrix:
         target:
-          - image: ghcr.io/${{ github.repository_owner }}/zammad
+          - image: ghcr.io/nurhanazim/zammad
           # - image: index.docker.io/${{ github.repository_owner }}/zammad
           # - image: quay.io/${{ github.repository_owner }}/zammad
           # - image: index.docker.io/${{ github.repository_owner }}/zammad-docker-compose
@@ -167,8 +167,7 @@ jobs:
           eval "docker buildx imagetools create \
             $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(jq -cr '.annotations | map("--annotation \"" + . + "\"") | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
-            ${{ steps.meta_arch_amd64.outputs.tags }} \
-#            ${{ steps.meta_arch_arm64.outputs.tags 
+            ${{ steps.meta_arch_amd64.outputs.tags }}"
 
       - name: Inspect image
         run: |
