@@ -200,7 +200,7 @@ returns
     if !message_id
       message_id = params[:update_id]
     end
-    "#{message_id}@telegram"
+    "#{message_id}.#{params['bid']}@telegram"
   end
 
   def self.sanitize_html(html)
